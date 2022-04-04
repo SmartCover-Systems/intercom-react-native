@@ -15,15 +15,23 @@ RCT_EXPORT_MODULE();
             @"WINDOW_DID_HIDE_NOTIFICATION": IntercomWindowDidHideNotification,
             @"WINDOW_DID_SHOW_NOTIFICATION": IntercomWindowDidShowNotification,
             @"HELP_CENTER_WINDOW_DID_SHOW_NOTIFICATION": IntercomHelpCenterDidShowNotification,
-            @"HELP_CENTER_WINDOW_DID_HIDE_NOTIFICATION": IntercomHelpCenterDidHideNotification
+            @"HELP_CENTER_WINDOW_DID_HIDE_NOTIFICATION": IntercomHelpCenterDidHideNotification,
+            @"UNREAD_COUNT_CHANGE_NOTIFICATION2": IntercomUnreadConversationCountDidChangeNotification2
     };
 }
 
 - (NSArray<NSString *> *)supportedEvents {
     return @[IntercomUnreadConversationCountDidChangeNotification,
             IntercomWindowDidHideNotification, IntercomWindowDidShowNotification,
-            IntercomHelpCenterDidShowNotification, IntercomHelpCenterDidHideNotification
+            IntercomHelpCenterDidShowNotification, IntercomHelpCenterDidHideNotification,
+            IntercomUnreadConversationCountDidChangeNotification2
     ];
+}
+
+- (void)handleUpdateUnreadCount2 {
+    NSUInteger unreadCount = [Intercom unreadConversationCount];
+    NSNumber *unreadCountNumber = @(unreadCount);
+    [self sendEventWithName:IntercomUnreadConversationCountDidChangeNotification2 body:@{@"count": unreadCountNumber}];
 }
 
 
