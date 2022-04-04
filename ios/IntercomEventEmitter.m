@@ -15,27 +15,18 @@ RCT_EXPORT_MODULE();
             @"WINDOW_DID_HIDE_NOTIFICATION": IntercomWindowDidHideNotification,
             @"WINDOW_DID_SHOW_NOTIFICATION": IntercomWindowDidShowNotification,
             @"HELP_CENTER_WINDOW_DID_SHOW_NOTIFICATION": IntercomHelpCenterDidShowNotification,
-            @"HELP_CENTER_WINDOW_DID_HIDE_NOTIFICATION": IntercomHelpCenterDidHideNotification,
-            @"UNREAD_COUNT_CHANGE_NOTIFICATION2": IntercomUnreadConversationCountDidChangeNotification2
+            @"HELP_CENTER_WINDOW_DID_HIDE_NOTIFICATION": IntercomHelpCenterDidHideNotification
     };
 }
 
 - (NSArray<NSString *> *)supportedEvents {
     return @[IntercomUnreadConversationCountDidChangeNotification,
             IntercomWindowDidHideNotification, IntercomWindowDidShowNotification,
-            IntercomHelpCenterDidShowNotification, IntercomHelpCenterDidHideNotification,
-            IntercomUnreadConversationCountDidChangeNotification2
+            IntercomHelpCenterDidShowNotification, IntercomHelpCenterDidHideNotification
     ];
 }
 
-- (void)handleUpdateUnreadCount2 {
-    NSUInteger unreadCount = [Intercom unreadConversationCount];
-    NSNumber *unreadCountNumber = @(unreadCount);
-    [self sendEventWithName:IntercomUnreadConversationCountDidChangeNotification2 body:@{@"count": unreadCountNumber}];
-}
-
-
-- (void)handleUpdateUnreadCount:(NSNotification *)notification {
+- (void)handleUpdateUnreadCount {
     NSUInteger unreadCount = [Intercom unreadConversationCount];
     NSNumber *unreadCountNumber = @(unreadCount);
     [self sendEventWithName:IntercomUnreadConversationCountDidChangeNotification body:@{@"count": unreadCountNumber}];
